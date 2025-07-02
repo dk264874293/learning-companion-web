@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "jsonuri": "^3.4.5",
     "marked": "^16.0.0",
     "marked-wikirefs": "^0.0.2",
     "vue": "^3.5.17"

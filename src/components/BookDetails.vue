@@ -2,12 +2,20 @@
  * @Author: 汪培良 rick_wang@yunquna.com
  * @Date: 2025-07-01 11:28:30
  * @LastEditors: 汪培良 rick_wang@yunquna.com
- * @LastEditTime: 2025-07-01 11:28:58
+ * @LastEditTime: 2025-07-02 06:39:15
  * @FilePath: /AI-project/berarbobo-discovery/src/components/BookDetails.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <script setup lang="ts">
 import { marked } from 'marked';
+import { type PropType } from 'vue';
+interface Topic { 
+    topic: string, 
+    post_reading_question: string, 
+    article_paragraph?: string,
+    article?: string, 
+    image_prompt?: string,
+}
 defineProps({
     image: {
         type: String,
@@ -24,6 +32,10 @@ defineProps({
     expand: {
         type: Boolean,
         default: false,
+    },
+    topics: {        
+        type: Array as PropType<Topic[]>,        
+        default: [],    
     }
 });
 </script>
@@ -36,6 +48,13 @@ defineProps({
         </div>
         <h1>{{ question }}</h1>
         <p class="introduction" v-html="marked.parse(introduction)"></p>
+        <div class="article">            
+            <div v-for="topic in topics" class="topic" :key="topic.topic">                
+                <h3 class="topic-title">{{ topic.topic }}</h3>                
+               <p class="article_paragraph" v-html="marked.parse(topic.article_paragraph || '')"></p>    
+                <p class="post-reading-question">{{ topic.post_reading_question }}</p>      
+            </div>        
+        </div>
     </div>
 </template>
 
