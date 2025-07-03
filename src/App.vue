@@ -2,7 +2,7 @@
  * @Author: 汪培良 rick_wang@yunquna.com
  * @Date: 2025-06-26 11:19:19
  * @LastEditors: 汪培良 rick_wang@yunquna.com
- * @LastEditTime: 2025-07-01 16:49:09
+ * @LastEditTime: 2025-07-02 16:08:27
  * @FilePath: /AI-project/berarbobo-discovery/src/App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -69,7 +69,6 @@ const questionSelected = (question: string, index: number) => {
   const eventSource = new EventSource(`http://localhost:3000${endpoint}?question=${question}&query=${query}`); 
   eventSource.addEventListener("message", function (e: any) { 
     let { uri, delta } = JSON.parse(e.data); 
-    console.log('uri, delta', uri, delta)
     if (uri.endsWith('quick-answer')) { 
       quickAnswer.value += delta; 
     } 
@@ -77,11 +76,11 @@ const questionSelected = (question: string, index: number) => {
       description.value += delta;
     } 
     if (uri.endsWith('cover_image')) { 
-      coverUrl.value = delta;
+      console.log('delta image', delta)
+      coverUrl.value = delta.url;
     } 
     if (uri.startsWith('topics')) { 
       let content = get(details, uri) || '';
-      console.log('content', content)
        set(details, uri, content + delta); 
        topics.value = [...details.topics];
     }
